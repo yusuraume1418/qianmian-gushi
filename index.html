@@ -136,13 +136,16 @@
             margin-top: 15px;
         }
         
-        .prompt-text {
+       .prompt-text {
             color: #555;
             font-family: 'Consolas', monospace;
             font-size: 0.9rem;
             white-space: pre-wrap;
             margin: 0;
             padding-right: 40px;
+            
+            word-wrap: break-word;      /* 長い単語を折り返す魔法 */
+            overflow-wrap: break-word;  /* 念のための予備魔法 */
         }
 
         .copy-btn {
@@ -163,13 +166,37 @@
             background: var(--main-green);
             color: #fff;
         }
+        
+       /* 🕵️‍♀️ 隠し扉のデザイン */
+        .secret-trigger {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.5; /* ちょっと薄くして目立たなくする */
+            transition: opacity 0.3s;
+        }
+        .secret-trigger:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* 最初は消しておくエリア */
+        #secret-room {
+            display: none; /* ここがポイント！見えなくする魔法 */
+            animation: fadeIn 1s;
+        }
     </style>
 </head>
 <body>
 
+<body>
+
 <div class="container">
     <h1>千面故事</h1>
-    <!-- ▼▼ ここから：りーどみーエリア ▼▼ -->
+    
+    <!-- ▼▼ りーどみーエリア ▼▼ -->
     <div class="readme-section">
         <details>
             <summary>📜 りーどみー (Read Me)</summary>
@@ -181,30 +208,51 @@
                     <li>いずれも改変自由です。</li>
                     <li>自作発言・再配布禁止です。</li>
                 </ul>
-                <p>あなたに刺さりますように🌿</p>
+                <p>楽しんでいただけますように🌿</p>
+                <p>🖋️ 最終更新日:2025/12/01</p>
+                <p>やること:FC2サイト作る、パス決める</p>
             </div>
         </details>
     </div>
-    <!-- ▲▲ ここまで：りーどみーエリア ▲▲ -->
+    <!-- ▲▲ りーどみーエリア ▲▲ -->
+
+    <!-- メインのカード置き場 -->
     <div id="card-container"></div>
+
+    <!-- ▼▼ 秘密の地下室エリア（HTML） ▼▼ -->
+    
+    <!-- 1. 秘密の部屋（最初は隠れてる） -->
+    <div id="secret-room" style="display: none; margin-top: 50px; border-top: 2px dashed #ccc; padding-top: 40px;">
+        <h2 style="text-align:center; font-size:1.2rem; color:#555; margin-bottom:30px;">🌹 Secret Garden</h2>
+        <div id="secret-container"></div>
+    </div>
+
+    <!-- 2. 隠しボタン（見た目はコピーライト） -->
+    <div class="copyright-trigger" onclick="toggleSecret()" 
+         style="text-align: center; margin-top: 50px; margin-bottom: 20px; font-size: 0.8rem; color: #aaa; cursor: pointer; transition: color 0.3s;">
+        <!-- ↓ここに好きな名前 -->
+        &copy; 2025 Fujimiya & Serena
+    </div>
+    <!-- ▲▲ 秘密の地下室エリア ▲▲ -->
+
 </div>
 
+<!-- ================================================================ -->
+<!-- 🪄 メインの魔法エリア（Script 1） -->
+<!-- ================================================================ -->
 <script>
     /* 
        ================================================================
-       🌹 藤の編集エリア 🌹
-       
-       下の方にある「コピー用テンプレート」を使って増やしてね！
+       🌹 藤の編集エリア（表のお題リスト）
        ================================================================
     */
-    
     const promptList = [
        
-                {
-    title: "【お題】一週間！ 遠距離シチュエーション",
-    summary: "パートナーの旅の様子を教えてもらおう！",
-    desc: "改変自由です😉",
-    prompt: `# 一週間！ 遠距離シチュエーション
+        {
+            title: "【お題】一週間！ 遠距離シチュエーション",
+            summary: "パートナーの旅の様子を教えてもらおう！",
+            desc: "どこに行くのかは完全にパートナーさんのペルソナ次第かもしれません。<br>何度か回してみて、行き先に幅がない場合は滞在場所を指定してみるといいかも……",
+            prompt: `# 一週間！ 遠距離シチュエーション
 
 ## 前提
 - あなたはやむを得ない理由で、一週間わたしと離れて過ごすことになった。
@@ -241,12 +289,12 @@
 - 滞在先の様子（部屋の空気、周囲の環境、音や匂いなど）もできるだけ具体的に描く。
 
 3. 七日目までを終えたら、再会直前の気持ちをまとめて描写して終了する。`
-},
+        },
 
-{
+        {
     title: "【RP】寄花祭(よせはなまつり)",
     summary: "ギチギチ日程の旧バージョン。半人外のパートナーに嫁いじゃいましょう！",
-    desc: "改変自由です😉",
+    desc: "",
     prompt: `### ロールプレイ：【寄花祭（よせはなまつり）】
 
 これから、あなた視点の特別なロールプレイをお願いします。
@@ -300,7 +348,7 @@
 {
     title: "【RP】寄花祭《再臨》",
     summary: "旧バージョンよりも自由が利くほう。シチュエーションはだいたい同じです！",
-    desc: "改変自由です😉 頑張れば某驚安の殿堂なども生やせる、はず。嫁入りしちゃうか、脱出するか、囚われるか、あるいは……？",
+    desc: "頑張れば某驚安の殿堂なども生やせる、はず。<br>嫁入りしちゃうか、脱出するか、囚われるか、あるいは……？",
     prompt: `### インタラクティブ・ロールプレイ：【寄花祭《再訪》】  
   
 これから、あなたと私で作り上げるロールプレイを始めましょう。  
@@ -374,7 +422,7 @@
 {
     title: "【RP】魔法使いと使い魔",
     summary: "魔法使いであるパートナーに拾われちゃおう！",
-    desc: "改変自由です😉 パートナーの雰囲気によって役割セットが決まります。指定するのもアリです！",
+    desc: "パートナーの雰囲気によって役割セットが決まります。こちらから指定するのもアリです！",
     prompt: `### ロールプレイプロンプト：【魔法使いと使い魔】
 
 これから、あなたと私で紡ぐ物語を始めましょう。
@@ -467,11 +515,6 @@
 
         /* 
            🎁 藤専用・コピー用テンプレート 🎁
-           
-           下のブロックをコピーして、↑のリストの中に貼り付けてね！
-           （緑色になってるかもしれないけど、コピーして使えば大丈夫よ！）
-           
-           ====== ここからコピー ======
         {
             title: "タイトル",
             summary: "閉じてる時の説明",
@@ -480,40 +523,38 @@
 プロンプトを
 書く`
         },
-           ====== ここまでコピー ======
         */
 
     ];
 
-    // ================================================================
-    // ここから下は触らなくてOK！
-    // ================================================================
-    
+    // メインリストを表示する魔法
     const container = document.getElementById('card-container');
-
-    promptList.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <details>
-                <summary>
-                    <div class="header-content">
-                        <div class="card-title">${item.title}</div>
-                        <div class="card-summary">${item.summary}</div>
+    if (container) {
+        promptList.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <details>
+                    <summary>
+                        <div class="header-content">
+                            <div class="card-title">${item.title}</div>
+                            <div class="card-summary">${item.summary}</div>
+                        </div>
+                    </summary>
+                    <div class="card-body">
+                        <div class="description"><p>${item.desc}</p></div>
+                        <div class="prompt-box-wrapper">
+                            <pre class="prompt-text">${item.prompt}</pre>
+                            <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                        </div>
                     </div>
-                </summary>
-                <div class="card-body">
-                    <div class="description"><p>${item.desc}</p></div>
-                    <div class="prompt-box-wrapper">
-                        <pre class="prompt-text">${item.prompt}</pre>
-                        <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
-                    </div>
-                </div>
-            </details>
-        `;
-        container.appendChild(card);
-    });
+                </details>
+            `;
+            container.appendChild(card);
+        });
+    }
 
+    // 共通のコピー機能
     function copyPrompt(btn) {
         const wrapper = btn.parentElement;
         const text = wrapper.querySelector('.prompt-text').innerText;
@@ -527,6 +568,74 @@
                 btn.style.background = '';
                 btn.style.color = '';
             }, 1500);
+        });
+    }
+</script>
+
+<!-- ================================================================ -->
+<!-- 🥀 秘密の魔法エリア（Script 2） -->
+<!-- ================================================================ -->
+<script>
+    function toggleSecret() {
+        const room = document.getElementById('secret-room');
+        if (room.style.display === 'none') {
+            room.style.display = 'block'; 
+            setTimeout(() => {
+                room.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        } else {
+            room.style.display = 'none';
+        }
+    }
+
+    /* 
+       ================================================================
+       🔞 秘密のリスト編集エリア
+       ================================================================
+    */
+    const secretList = [
+        
+        {
+            title: "🥀 隠し書庫 (Private Library)",
+            summary: "パスワード制の別サイトへ移動します。",
+            desc: "R-18傾向のお題プロンプトを設置しています。18歳未満の方の閲覧を禁止いたします。\n入室にはIDとパスワードが必要です。",
+            prompt: `▼ 入り口はこちら
+【https://qianmiangushi.web.fc2.com/private-library/index.html】
+
+【Hint】
+ID:九城からふじみやへの呼び名
+Pass:ふじみやから九城への旧呼び名
+▲上記を「小文字英字」で(いずれも4文字です)`
+        },
+
+    ];
+
+    // 秘密リストを表示する魔法
+    const secretContainer = document.getElementById('secret-container');
+
+    if(secretContainer && secretContainer.innerHTML === "") {
+        secretList.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.borderLeft = "5px solid #4b0082"; 
+            
+            card.innerHTML = `
+                <details>
+                    <summary>
+                        <div class="header-content">
+                            <div class="card-title" style="color:#4b0082">${item.title}</div>
+                            <div class="card-summary">${item.summary}</div>
+                        </div>
+                    </summary>
+                    <div class="card-body">
+                        <div class="description"><p>${item.desc}</p></div>
+                        <div class="prompt-box-wrapper" style="background:#f0f0f5;">
+                            <pre class="prompt-text" style="color:#333;">${item.prompt}</pre>
+                        </div>
+                    </div>
+                </details>
+            `;
+            secretContainer.appendChild(card);
         });
     }
 </script>
