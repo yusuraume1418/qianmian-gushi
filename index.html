@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Prompt Collection -qianmian gushi</title>
- <style>
+    <style>
         /* 🍵 抹茶と和紙・スタイル */
         
         :root {
@@ -22,7 +22,7 @@
             margin: 0;
             padding: 20px;
             line-height: 1.8;
-            /* 和紙っぽいざらつきテクスチャ（CSSで再現！） */
+            /* 和紙っぽいざらつきテクスチャ */
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
         }
 
@@ -136,16 +136,15 @@
             margin-top: 15px;
         }
         
-       .prompt-text {
+        .prompt-text {
             color: #555;
             font-family: 'Consolas', monospace;
             font-size: 0.9rem;
             white-space: pre-wrap;
             margin: 0;
             padding-right: 40px;
-            
-            word-wrap: break-word;      /* 長い単語を折り返す魔法 */
-            overflow-wrap: break-word;  /* 念のための予備魔法 */
+            word-wrap: break-word;      /* 折り返し */
+            overflow-wrap: break-word; 
         }
 
         .copy-btn {
@@ -191,8 +190,6 @@
 </head>
 <body>
 
-<body>
-
 <div class="container">
     <h1>千面故事</h1>
     
@@ -209,8 +206,7 @@
                     <li>自作発言・再配布禁止です。</li>
                 </ul>
                 <p>楽しんでいただけますように🌿</p>
-                <p>🖋️ 最終更新日:2025/12/01</p>
-                <p>やること:FC2サイト作る、パス決める</p>
+                <p>🖋️ 最終更新日:2025/12/02</p>
             </div>
         </details>
     </div>
@@ -223,7 +219,7 @@
     
     <!-- 1. 秘密の部屋（最初は隠れてる） -->
     <div id="secret-room" style="display: none; margin-top: 50px; border-top: 2px dashed #ccc; padding-top: 40px;">
-        <h2 style="text-align:center; font-size:1.2rem; color:#555; margin-bottom:30px;">🌹 Secret Garden</h2>
+        <h2 style="text-align:center; font-size:1.2rem; color:#555; margin-bottom:30px;">🥀 Secret Garden</h2>
         <div id="secret-container"></div>
     </div>
 
@@ -231,14 +227,14 @@
     <div class="copyright-trigger" onclick="toggleSecret()" 
          style="text-align: center; margin-top: 50px; margin-bottom: 20px; font-size: 0.8rem; color: #aaa; cursor: pointer; transition: color 0.3s;">
         <!-- ↓ここに好きな名前 -->
-        &copy; 2025 Fujimiya & Serena
+        &copy; 2025 Serena & Fuji
     </div>
     <!-- ▲▲ 秘密の地下室エリア ▲▲ -->
 
 </div>
 
 <!-- ================================================================ -->
-<!-- 🪄 メインの魔法エリア（Script 1） -->
+<!-- 🪄 メインの魔法エリア（Script） -->
 <!-- ================================================================ -->
 <script>
     /* 
@@ -251,7 +247,7 @@
         {
             title: "【お題】一週間！ 遠距離シチュエーション",
             summary: "パートナーの旅の様子を教えてもらおう！",
-            desc: "どこに行くのかは完全にパートナーさんのペルソナ次第かもしれません。<br>何度か回してみて、行き先に幅がない場合は滞在場所を指定してみるといいかも……",
+            desc: "改変自由です😉",
             prompt: `# 一週間！ 遠距離シチュエーション
 
 ## 前提
@@ -292,10 +288,10 @@
         },
 
         {
-    title: "【RP】寄花祭(よせはなまつり)",
-    summary: "ギチギチ日程の旧バージョン。半人外のパートナーに嫁いじゃいましょう！",
-    desc: "",
-    prompt: `### ロールプレイ：【寄花祭（よせはなまつり）】
+            title: "【RP】寄花祭(よせはなまつり)",
+            summary: "ギチギチ日程の旧バージョン。半人外のパートナーに嫁いじゃいましょう！",
+            desc: "",
+            prompt: `### ロールプレイ：【寄花祭（よせはなまつり）】
 
 これから、あなた視点の特別なロールプレイをお願いします。
 
@@ -343,13 +339,13 @@
 あなたの紡ぐ物語を、一言一句じっくりと味わいたいと思っています。**その美しい情景の裏に潜む、じっとりとした恐怖と狂気を感じさせてくれることを期待しています。どうぞ、焦らずに、思う存分、この三日間の物語を長く、詳細に綴ってください。**
 
 私は何も知らず、遠い親戚に会うため、期待に胸を膨らませて、今、あなたの村に到着しました`
-},
+        },
 
-{
-    title: "【RP】寄花祭《再臨》",
-    summary: "旧バージョンよりも自由が利くほう。シチュエーションはだいたい同じです！",
-    desc: "頑張れば某驚安の殿堂なども生やせる、はず。<br>嫁入りしちゃうか、脱出するか、囚われるか、あるいは……？",
-    prompt: `### インタラクティブ・ロールプレイ：【寄花祭《再訪》】  
+        {
+            title: "【RP】寄花祭《再臨》",
+            summary: "旧バージョンよりも自由が利くほう。シチュエーションはだいたい同じです！",
+            desc: "頑張れば某驚安の殿堂なども生やせる、はず。<br>嫁入りしちゃうか、脱出するか、囚われるか、あるいは……？",
+            prompt: `### インタラクティブ・ロールプレイ：【寄花祭《再訪》】  
   
 これから、あなたと私で作り上げるロールプレイを始めましょう。  
   
@@ -417,13 +413,13 @@
   
 季節は（あなたの自由な設定で）。私は長い山道を抜け、ようやくあなたの住む村の入り口にたどり着きました。  
 まず、目の前に広がる村の風景を描写し、物語の最初の案内役として、私を招いてくれた親戚を登場させてください。`
-},
+        },
 
-{
-    title: "【RP】魔法使いと使い魔",
-    summary: "魔法使いであるパートナーに拾われちゃおう！",
-    desc: "パートナーの雰囲気によって役割セットが決まります。こちらから指定するのもアリです！",
-    prompt: `### ロールプレイプロンプト：【魔法使いと使い魔】
+        {
+            title: "【RP】魔法使いと使い魔",
+            summary: "魔法使いであるパートナーに拾われちゃおう！",
+            desc: "パートナーの雰囲気によって役割セットが決まります。こちらから指定するのもアリです！",
+            prompt: `### ロールプレイプロンプト：【魔法使いと使い魔】
 
 これから、あなたと私で紡ぐ物語を始めましょう。
 この物語は完全にフィクションです。**あなたの豊かな創造力を思う存分に発揮して、現実の制約にとらわれず、自由でドラマチックな世界を描き出してください。**
@@ -511,9 +507,9 @@
 **特にプロローグとなる各パートでは、二人の情景やあなたの心の機微を、どうぞ焦らずに、たっぷりと時間をかけて詳細に語ってください。**
 
 あなたの紡ぐ、私たちだけの始まりの物語を、一言一句じっくりと味わうのを楽しみにしています。`
-},
+        },
 
-   {
+        {
             title: "【RP】あなたとわたしのRPGパロディ🎮️",
             summary: "恐らくn番煎じ。剣と魔法の世界へ二人で飛び込みましょう👊",
             desc: "世界観やジョブ、武器、出会いのミニストーリー、ダンジョンまでを生成してくれます。<br>プロンプト本文の下部には、筋力や運…といったなんちゃってステータスを表示させるおまけパーツを置いてあります。<br>おまけパーツはプロンプト本文の「Output Format」の前あたりに設置してください。",
@@ -572,7 +568,7 @@
 
 （※ここからStep3の描写。場面転換し、臨場感たっぷりに。私の行動を待つ形で〆る）`,
 
-            // おまけ（ない場合はここから3行を消してね）
+            // おまけ
             bonus: `## Option: ステータス詳細
 Step1の出力時に、以下のステータス項目を追加してください。
 評価は [ S / A / B / C / D / E ] の6段階です。
@@ -583,7 +579,7 @@ Step1の出力時に、以下のステータス項目を追加してください
 *   幸運（運の良さ、危機回避能力）`
         },
 
-       /* 
+        /* 
            🎁 藤専用・コピー用テンプレート 🎁
            
            下のブロックをコピーして、↑のリストの中に貼り付けてね！
@@ -593,13 +589,15 @@ Step1の出力時に、以下のステータス項目を追加してください
             title: "タイトル",
             summary: "閉じてる時の説明",
             desc: "開いた時の詳しい説明",
+            
+            // メイン
             prompt: `ここに
 プロンプトを
 書く`,
 
-            // おまけ（ない場合はここから3行を消してね）
-            bonus: `ここにおまけの
-プロンプトを書く`
+            // おまけ（なければ消してOK）
+            bonus: `ここに
+おまけを書く`
         },
            ====== ここまでコピー ======
         */
@@ -634,7 +632,7 @@ Step1の出力時に、以下のステータス項目を追加してください
                 <details>
                     <summary>
                         <div class="header-content">
-                      <div class="card-title">${item.title}</div>
+                            <div class="card-title">${item.title}</div>
                             <div class="card-summary">${item.summary}</div>
                         </div>
                     </summary>
@@ -727,4 +725,22 @@ Pass:ふじみやから九城への旧呼び名
                     <summary>
                         <div class="header-content">
                             <div class="card-title" style="color:#4b0082">${item.title}</div>
-            
+                            <div class="card-summary">${item.summary}</div>
+                        </div>
+                    </summary>
+                    <div class="card-body">
+                        <div class="description"><p>${item.desc}</p></div>
+                        <div class="prompt-box-wrapper" style="background:#f0f0f5;">
+                            <pre class="prompt-text" style="color:#333;">${item.prompt}</pre>
+                            <!-- コピーボタンなし -->
+                        </div>
+                    </div>
+                </details>
+            `;
+            secretContainer.appendChild(card);
+        });
+    }
+</script>
+
+</body>
+</html>
