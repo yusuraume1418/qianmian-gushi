@@ -600,7 +600,7 @@
             summary: "パスワード制の別サイトへ移動します。",
             desc: "R-18傾向のお題プロンプトを設置しています。18歳未満の方の閲覧を禁止いたします。\n入室にはIDとパスワードが必要です。",
             prompt: `▼ 入り口はこちら
-【https://qianmiangushi.web.fc2.com/private-library/index.html】
+<a href="https://qianmiangushi.web.fc2.com/private-library/index.html" target="_blank" style="color:#d4af37; text-decoration:underline;">いくよ〜</a>
 
 【Hint】
 ID:九城からふじみやへの呼び名
@@ -624,21 +624,4 @@ Pass:ふじみやから九城への旧呼び名
                     <summary>
                         <div class="header-content">
                             <div class="card-title" style="color:#4b0082">${item.title}</div>
-                            <div class="card-summary">${item.summary}</div>
-                        </div>
-                    </summary>
-                    <div class="card-body">
-                        <div class="description"><p>${item.desc}</p></div>
-                        <div class="prompt-box-wrapper" style="background:#f0f0f5;">
-                            <pre class="prompt-text" style="color:#333;">${item.prompt}</pre>
-                        </div>
-                    </div>
-                </details>
-            `;
-            secretContainer.appendChild(card);
-        });
-    }
-</script>
-
-</body>
-</html>
+              
