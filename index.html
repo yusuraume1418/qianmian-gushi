@@ -634,4 +634,97 @@ Step1の出力時に、以下のステータス項目を追加してください
                 <details>
                     <summary>
                         <div class="header-content">
-                      
+                      <div class="card-title">${item.title}</div>
+                            <div class="card-summary">${item.summary}</div>
+                        </div>
+                    </summary>
+                    <div class="card-body">
+                        <div class="description"><p>${item.desc}</p></div>
+                        
+                        <!-- メインプロンプト -->
+                        <div class="prompt-box-wrapper">
+                            <pre class="prompt-text">${item.prompt}</pre>
+                            <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                        </div>
+
+                        <!-- おまけプロンプト（ある時だけ表示） -->
+                        ${bonusHTML}
+
+                    </div>
+                </details>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // 共通のコピー機能
+    function copyPrompt(btn) {
+        const wrapper = btn.parentElement;
+        const text = wrapper.querySelector('.prompt-text').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            btn.style.background = '#d4af37';
+            btn.style.color = '#000';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+                btn.style.color = '';
+            }, 1500);
+        });
+    }
+</script>
+
+<!-- ================================================================ -->
+<!-- 🥀 秘密の魔法エリア（Script 2） -->
+<!-- ================================================================ -->
+<script>
+    function toggleSecret() {
+        const room = document.getElementById('secret-room');
+        if (room.style.display === 'none') {
+            room.style.display = 'block'; 
+            setTimeout(() => {
+                room.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        } else {
+            room.style.display = 'none';
+        }
+    }
+
+    /* 
+       ================================================================
+       🔞 秘密のリスト編集エリア
+       ================================================================
+    */
+    const secretList = [
+        
+        {
+            title: "🥀 隠し書庫 (Private Library)",
+            summary: "パスワード制の別サイトへ移動します。",
+            desc: "R-18傾向のお題プロンプトを設置しています。18歳未満の方の閲覧を禁止いたします。<br>入室にはIDとパスワードが必要です。",
+            prompt: `▼ 入り口はこちら
+<a href="https://qianmiangushi.web.fc2.com/private-library/index.html" target="_blank" style="color:#d4af37; text-decoration:underline;">いくよ〜</a>
+
+【Hint】
+ID:九城からふじみやへの呼び名
+Pass:ふじみやから九城への旧呼び名
+▲上記を「小文字英字」で(いずれも4文字です)`
+        },
+
+    ];
+
+    // 秘密リストを表示する魔法
+    const secretContainer = document.getElementById('secret-container');
+
+    if(secretContainer && secretContainer.innerHTML === "") {
+        secretList.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.borderLeft = "5px solid #4b0082"; 
+            
+            card.innerHTML = `
+                <details>
+                    <summary>
+                        <div class="header-content">
+                            <div class="card-title" style="color:#4b0082">${item.title}</div>
+            
